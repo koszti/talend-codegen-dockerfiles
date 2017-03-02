@@ -1,4 +1,4 @@
-FROM openjdk:latest
+FROM openjdk:7-jdk
 LABEL maintainer peter.kosztolanyi@gmail.com
 
 ENV TALEND_DOWNLOAD_URL=https://sourceforge.net/projects/talendesb/files/Talend%20Open%20Studio%20for%20ESB/5.6.2/TOS_ESB-20150508_1414-V5.6.2.zip/download
@@ -25,3 +25,6 @@ RUN mkdir $TALEND_DIR && unzip /opt/TOS*zip -d /opt/talend
 
 # Compile Command Line Code Generation (job-export) Talend plugin and deploy to Talend plugins dir
 RUN git clone $TALEND_CODEGEN_GIT_REPO $TALEND_CODEGEN_DIR && cd $TALEND_CODEGEN_DIR && make && cp jar/talend-codegen*.jar /opt/talend/Studio/plugins
+
+# Create talend-codegen output directory
+COPY talend-codegen /opt/talend-codegen/bin/talend-codegen
